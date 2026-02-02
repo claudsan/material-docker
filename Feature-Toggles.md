@@ -124,7 +124,7 @@ public class CustomFlagController {
 
 ### Integração com Actuator
 O Togglz se integra ao Spring Boot Actuator, permitindo visualizar as flags via JSON padrão em /actuator/togglz.
-Para ativar no application.yml:
+Para ativar no ``application.yml``:
 
 ```yaml
 management:
@@ -209,16 +209,42 @@ No seu pom.xml, tira o do Mongo e coloca o do Redis:
 </dependency>
 ```
 
+### 1.1 Configuração do Redis
+
+Adicioanar a configuração do REDIS no ``application.yaml`` para se comunicar com o REDIS.
+
+```yaml
+spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      # password: sua-senha-aqui (se tiver)
+```
+
 ### 2. Configure o Repositório na Classe
-Em vez do MongoStateRepository, você vai usar o RedisStateRepository. O Togglz usa uma lib chamada Jedis pra conversar com o Redis:
+
+Em vez do MongoStateRepository, você vai usar o RedisStateRepository. 
+
+O Togglz usa uma lib chamada Jedis pra conversar com o Redis:
+
 ```java
-@Bean
-public StateRepository stateRepository() {
-    // Cria o pool de conexão com o Redis local
-    JedisPool jedisPool = new JedisPool("localhost", 6379);
+@Configuration
+public class MinhaLibToggleConfig {
+
+    @Bean
+    public StateRepository stateRepository(
+            @Value("${spring.data.redis.host:localhost}") String redisHost,
+            @Value("${spring.data.redis.port:6379}") int redisPort
+    ) {
+        JedisPool jedisPool = new JedisPool(redisHost, redisPort);
+        
+        // O cache de 10s (10000ms) também é importante aqui pra não sobrecarregar o Redis
+        StateRepository redisRepo = new RedisStateRepository(jedisPool, "togglz:");
+        return new CachingStateRepository(redisRepo, 10000);
+    }
     
-    // O Togglz vai salvar as flags com o prefixo "togglz:" lá no Redis
-    return new RedisStateRepository(jedisPool, "togglz:");
+    // ... bean do featureProvider continua igual
 }
 ```
 
