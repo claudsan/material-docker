@@ -187,7 +187,7 @@ public UserProvider userProvider() {
 ```
 
 
-## E o REDIS pode (adicionar aquele doce leite no pão de queijo)? 
+## E o REDIS pode? (adicionar aquele doce leite no pão de queijo)
 
 E vou te falar: usar Redis com Feature Toggle é "bão" demais da conta, porque o trem é rápido igual um raio!
 
