@@ -12,14 +12,14 @@ Imagine que você subiu aquela feature nova, mas o trem deu ruim lá em produç�
 
 ## A Receita do Pão de Queijo (A Configuração)
 
-Pra esse trem funcionar no **Spring Boot 3** (com Java 17 ou 21), a gente usa o [Togglz 4.4.0](https://www.togglz.org), que já tá atualizado pro tal do "Jakarta EE". Assim não tem erro de compatibilidade prá não "deixar o café aguado".
+Pra esse trem funcionar no **Spring Boot** (com Java 17 ou 21), a gente usa o [Togglz 4.4.0](https://www.togglz.org), que já tá atualizado pro tal do "Jakarta EE". Assim não tem erro de compatibilidade prá não "deixar o café aguado".
 
 #### 1. Os Ingredientes (Dependências)
 No `pom.xml` da sua lib, você joga essas dependências aqui. É o básico pra o trem não solar:
 
 ```xml
 <dependencies>
-    <!-- Core do Togglz para Spring Boot 3 -->
+    <!-- Core do Togglz para Spring Boot -->
     <dependency>
         <groupId>org.togglz</groupId>
         <artifactId>togglz-spring-boot-starter</artifactId>
@@ -100,7 +100,7 @@ public class CustomFlagController {
 
     private final FeatureManager manager;
 
-    // Injeção via construtor: O Spring 3 gosta mais assim e evita "dor de cabeça" nos testes
+    // Injeção via construtor: O Spring gosta mais assim e evita "dor de cabeça" nos testes
     public CustomFlagController(FeatureManager manager) {
         this.manager = manager;
     }
@@ -265,7 +265,7 @@ Se quiser testar esse trem agora, troca o serviço do Mongo por esse aqui no seu
 
 
 ### Conclusão
-Usar Togglz com Mongo no Spring 3 é um trem que compensa demais. Você ganha agilidade, segurança e ainda consegue gerenciar tudo por uma interface bonitinha. Se alguém vier te perguntar por que você demorou tanto pra implementar isso, você só responde: "É que o trem tava devagar, mas agora pegou trilho!"
+Usar Togglz com Mongo no Spring é um trem que compensa demais. Você ganha agilidade, segurança e ainda consegue gerenciar tudo por uma interface bonitinha. Se alguém vier te perguntar por que você demorou tanto pra implementar isso, você só responde: "É que o trem tava devagar, mas agora pegou trilho!"
 
 E aí, uai, o que achou desse guia? Ficou "chique no úrtimo" comenta ai se já conhecia ou já utiliza o Togglz/outra para gerenciar as feature toggles no seu projeto.
 
